@@ -1,0 +1,15 @@
+# .circleci/config.yml
+# Configure Jobs:
+version: 2
+jobs:
+
+  # Build CircleCi Worker
+  build-circle-worker:
+    working_directory: /app
+    docker:
+      - image: docker:git
+    steps:
+      - checkout
+      - run:
+          name: Check docker socket
+          command: docker ps
