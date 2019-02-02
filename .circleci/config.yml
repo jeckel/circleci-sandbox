@@ -4,7 +4,7 @@ version: 2
 jobs:
 
   # Build CircleCi Worker
-  build-circle-worker:
+  build:
     working_directory: /app
     docker:
       - image: docker:git
