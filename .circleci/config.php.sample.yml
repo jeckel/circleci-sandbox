@@ -1,37 +1,63 @@
-# PHP CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-php/ for more details
-#
+# .circleci/config.yml
+# Configure Jobs:
 version: 2
 jobs:
-  build:
-    docker:
-      # specify the version you desire here
-      - image: circleci/php:7.1-browsers
 
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mysql:9.4
+    build:
+        docker:
+            # specify the version you desire here
+            - image: circleci/php:7.1-browsers
 
-    working_directory: ~/repo
+            # Specify service dependencies here if necessary
+            # CircleCI maintains a library of pre-built images
+            # documented at https://circleci.com/docs/2.0/circleci-images/
+            # - image: circleci/mysql:9.4
+            - image: selenium/standalone-chrome:latest
 
-    steps:
-      - checkout
+        working_directory: ~/repo
 
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "composer.json" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
+        steps:
+            - checkout
 
-      - run: composer install -n --prefer-dist
+            - setup_remote_docker
+            - run:
+                  name: Check docker socket
+                  command: docker ps
 
-      - save_cache:
-          paths:
-            - ./vendor
-          key: v1-dependencies-{{ checksum "composer.json" }}
 
-      # run tests!
-      - run: phpunit
+            # Download and cache dependencies
+            - restore_cache:
+                  keys:
+                      - v1-dependencies-{{ checksum "composer.json" }}
+                      # fallback to using the latest cache if no exact match is found
+                      - v1-dependencies-
+
+            - run: composer install -n --prefer-dist
+
+            - save_cache:
+                  paths:
+                      - ./vendor
+                  key: v1-dependencies-{{ checksum "composer.json" }}
+
+            - run: sudo docker build -t runner -f docker/supervisor-nginx-fpm/Dockerfile .
+
+            - run:
+                  name: Check docker socket
+                  command: docker ps
+
+#            - run:
+#                name: Codeception
+#                command: ./vendor/bin/codecept run
+
+
+#  # Build CircleCi Worker
+#  build:
+#    working_directory: /app
+#    docker:
+#      - image: docker:git
+#    steps:
+#      - checkout
+#      - setup_remote_docker
+#      - run:
+#          name: Check docker socket
+#          command: docker ps
