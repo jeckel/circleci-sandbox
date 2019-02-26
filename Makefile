@@ -9,7 +9,7 @@ codecept:
 	@${CODECEPTION} ${CMD}
 
 test: up
-	@${CODECEPTION} run
+	@${CODECEPTION} run --coverage --coverage-html
 
 circle:
 	@circleci local execute --job build
