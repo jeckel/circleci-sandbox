@@ -54,7 +54,7 @@ jobs:
                 name: Check docker socket
                 command: docker ps
 
-            - run: ./wait-for-it.sh -p 4444
+#            - run: ./wait-for-it.sh -p 4444
 
             - run: docker-compose -f docker-compose.circleci.yml run codeception
 
