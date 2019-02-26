@@ -11,18 +11,18 @@ jobs:
             - restore_cache:
                   name: Restore composer's vendor cache
                   keys:
-                      - vendor-{{ checksum "composer.lock" }}
+                      - vendor-v1-{{ checksum "composer.lock" }}
             - run:
                   name: Install composer deps
                   command: composer install && chmod -R 777 vendor
             - save_cache:
                   name: Save composer's vendor in cache
-                  key: vendor-{{ checksum "composer.lock" }}
+                  key: vendor-v1-{{ checksum "composer.lock" }}
                   paths:
                       - "vendor"
             - save_cache:
                   name: Save builded source in cache
-                  key: source-{{ .Environment.CIRCLE_SHA1 }}
+                  key: source-v1-{{ .Environment.CIRCLE_SHA1 }}
                   paths: .
 
     build:
@@ -35,7 +35,7 @@ jobs:
             - restore_cache:
                   name: Restore composer's vendor cache
                   keys:
-                      - source-{{ .Environment.CIRCLE_SHA1 }}
+                      - source-v1-{{ .Environment.CIRCLE_SHA1 }}
             - run:
                   name: Install Docker Compose
                   command: |
