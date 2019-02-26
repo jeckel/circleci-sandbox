@@ -12,6 +12,7 @@ jobs:
             # CircleCI maintains a library of pre-built images
             # documented at https://circleci.com/docs/2.0/circleci-images/
             # - image: circleci/mysql:9.4
+            - image: selenium/standalone-chrome:3.1.0
 
         working_directory: ~/repo
 
@@ -37,6 +38,12 @@ jobs:
                   paths:
                       - ./vendor
                   key: v1-dependencies-{{ checksum "composer.json" }}
+
+            - run: sudo docker build -t runner -f docker/supervisor-nginx-fpm/Dockerfile .
+              
+            - run:
+                  name: Check docker socket
+                  command: docker ps
 
 #            - run:
 #                name: Codeception
