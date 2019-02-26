@@ -1,0 +1,13 @@
+{
+    "name": "root/app",
+    "authors": [
+        {
+            "name": "Jeckel",
+            "email": "devci@j3ck3l.me"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "codeception/codeception": "^2.5"
+    }
+}
