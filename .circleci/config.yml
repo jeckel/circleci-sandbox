@@ -12,18 +12,20 @@ jobs:
             - restore_cache:
                   name: Restore composer's vendor cache
                   keys:
-                      - vendor-v1-{{ checksum "composer.lock" }}
+                      - vendor-v2-{{ checksum "composer.lock" }}
             - run:
                   name: Install composer deps
-                  command: composer install && chmod -R 777 vendor
+                  command: |
+                       composer install
+#                      chmod -R 777 vendor
             - save_cache:
                   name: Save composer's vendor in cache
-                  key: vendor-v1-{{ checksum "composer.lock" }}
+                  key: vendor-v2-{{ checksum "composer.lock" }}
                   paths:
                       - "vendor"
             - save_cache:
                   name: Save builded source in cache
-                  key: source-v1-{{ .Environment.CIRCLE_SHA1 }}
+                  key: source-v2-{{ .Environment.CIRCLE_SHA1 }}
                   paths: .
 
     build:
@@ -33,11 +35,11 @@ jobs:
         working_directory: ~/project
 
         steps:
-            - run: sudo chmod -R 777 .
+#            - run: sudo chmod -R 777 .
             - restore_cache:
                   name: Restore composer's vendor cache
                   keys:
-                      - source-v1-{{ .Environment.CIRCLE_SHA1 }}
+                      - source-v2-{{ .Environment.CIRCLE_SHA1 }}
             - run: mv /tmp/project ~/
             - run:
                   name: Install Docker Compose
@@ -52,16 +54,9 @@ jobs:
                 name: Check docker socket
                 command: docker ps
 
-            - run: sleep 5
+            - run: ./wait-for-it.sh -p 4444
 
             - run: docker-compose -f docker-compose.circleci.yml run codeception
-#
-#            - run: docker build -t runner -f docker/supervisor-nginx-fpm/Dockerfile .
-#            - run: docker run -d runner
-#
-#            - run:
-#                  name: Check docker socket
-#                  command: docker ps
 
 # Define the workflow
 workflows:
