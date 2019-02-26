@@ -3,47 +3,39 @@
 version: 2
 jobs:
     # Will build the source code with deps and store in cache to be reused in next steps
-#    composer:
-#        docker:
-#            - image: composer
-#        steps:
-#            - checkout
-#            - restore_cache:
-#                  name: Restore composer's vendor cache
-#                  keys:
-#                      - vendor-{{ checksum "composer.lock" }}
-#            - run:
-#                  name: Install composer deps
-#                  command: if [ ! -d vendor ] ; then composer install; fi
-#            - run:
-#                  name: Setup env file
-#                  command: cp .env.dist .env
-#            - save_cache:
-#                  name: Save composer's vendor in cache
-#                  key: vendor-{{ checksum "composer.lock" }}
-#                  paths:
-#                      - "vendor"
-#            - save_cache:
-#                  name: Save builded source in cache
-#                  key: source-{{ .Environment.CIRCLE_SHA1 }}
-#                  paths: .
+    composer:
+        docker:
+            - image: composer
+        steps:
+            - checkout
+            - restore_cache:
+                  name: Restore composer's vendor cache
+                  keys:
+                      - vendor-{{ checksum "composer.lock" }}
+            - run:
+                  name: Install composer deps
+                  command: composer install && chmod -R 777 vendor
+            - save_cache:
+                  name: Save composer's vendor in cache
+                  key: vendor-{{ checksum "composer.lock" }}
+                  paths:
+                      - "vendor"
+            - save_cache:
+                  name: Save builded source in cache
+                  key: source-{{ .Environment.CIRCLE_SHA1 }}
+                  paths: .
 
     build:
         machine:
             docker_layer_caching: true
-#            - image: selenium/standalone-chrome:latest
 
         working_directory: ~/repo
 
         steps:
-            - checkout
-#            - restore_cache:
-#                  name: Restore composer's vendor cache
-#                  keys:
-#                      - source-{{ .Environment.CIRCLE_SHA1 }}
-#            - run: apk add curl
-
-#            - setup_remote_docker
+            - restore_cache:
+                  name: Restore composer's vendor cache
+                  keys:
+                      - source-{{ .Environment.CIRCLE_SHA1 }}
             - run:
                   name: Install Docker Compose
                   command: |
@@ -51,15 +43,15 @@ jobs:
                       chmod +x ~/docker-compose
                       mv ~/docker-compose /usr/local/bin/docker-compose
 
-            - run: echo $PATH
-
-#            - run: docker-compose -f docker-compose.circleci.yml build
-            - run: /usr/local/bin/docker-compose -f docker-compose.circleci.yml up -d
-
+            - run: docker-compose -f docker-compose.circleci.yml up -d web selenium
 
             - run:
                 name: Check docker socket
                 command: docker ps
+
+            - run: sleep 5
+
+            - run: docker-compose -f docker-compose.circleci.yml up
 #
 #            - run: docker build -t runner -f docker/supervisor-nginx-fpm/Dockerfile .
 #            - run: docker run -d runner
@@ -68,13 +60,13 @@ jobs:
 #                  name: Check docker socket
 #                  command: docker ps
 
-## Define the workflow
-#workflows:
-#    version: 2
-#    # Always run code-quality
-#    build:
-#        jobs:
-#            - composer
-#            - build:
-#                  requires:
-#                      - composer
+# Define the workflow
+workflows:
+    version: 2
+    # Always run code-quality
+    build:
+        jobs:
+            - composer
+            - build:
+                  requires:
+                      - composer

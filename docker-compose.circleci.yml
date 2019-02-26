@@ -3,7 +3,7 @@ version: '3.3'
 # Define services
 #
 services:
-    runner:
+    web:
         build:
             context: .
             dockerfile: docker/supervisor-nginx-fpm/Dockerfile
@@ -13,4 +13,13 @@ services:
     selenium:
         image: selenium/standalone-chrome:latest
         depends_on:
-          - runner
+          - web
+
+    codeception:
+        build:
+            contexty: .
+            dockerfile: docker/circleci-codeception/Dockerfile
+        depends_on:
+          - web
+          - selenium
+        command: ./vendor/bin/codecept run
