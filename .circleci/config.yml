@@ -29,20 +29,21 @@ jobs:
 #                  paths: .
 
     build:
-        docker:
-            - image: docker:git
+        machine:
+            docker_layer_caching: true
 #            - image: selenium/standalone-chrome:latest
 
         working_directory: ~/repo
 
         steps:
+            - checkout
 #            - restore_cache:
 #                  name: Restore composer's vendor cache
 #                  keys:
 #                      - source-{{ .Environment.CIRCLE_SHA1 }}
-            - run: apk add curl
+#            - run: apk add curl
 
-            - setup_remote_docker
+#            - setup_remote_docker
             - run:
                   name: Install Docker Compose
                   command: |
