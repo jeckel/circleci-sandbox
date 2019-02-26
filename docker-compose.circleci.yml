@@ -22,4 +22,4 @@ services:
         depends_on:
           - web
           - selenium
-#        command: ./wait-for-it.sh selenium:4444 -- ./vendor/bin/codecept run
+        command: run --coverage --coverage-html
