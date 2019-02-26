@@ -17,3 +17,4 @@ services:
         image: php:7-fpm-alpine
         volumes:
             - ./:/var/www/project/
+        working_dir: /var/www/project/
