@@ -54,7 +54,7 @@ jobs:
 
             - run: sleep 5
 
-            - run: docker-compose -f docker-compose.circleci.yml up
+            - run: docker-compose -f docker-compose.circleci.yml run codeception
 #
 #            - run: docker build -t runner -f docker/supervisor-nginx-fpm/Dockerfile .
 #            - run: docker run -d runner
