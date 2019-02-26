@@ -32,6 +32,7 @@ jobs:
         working_directory: ~/repo
 
         steps:
+            - run: sudo chmod -R 777 .
             - restore_cache:
                   name: Restore composer's vendor cache
                   keys:
