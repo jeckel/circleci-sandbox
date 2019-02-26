@@ -23,4 +23,20 @@ class AcceptanceTester extends \Codeception\Actor
    /**
     * Define custom actions here
     */
+
+    /**
+     * @Given I am on :arg1
+     */
+    public function iAmOn($arg1)
+    {
+        $this->amOnPage($arg1);
+    }
+
+    /**
+     * @Then I should see :arg1
+     */
+    public function iShouldSee($arg1)
+    {
+        $this->see($arg1);
+    }
 }
