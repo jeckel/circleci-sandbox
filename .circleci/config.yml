@@ -18,6 +18,12 @@ jobs:
         steps:
             - checkout
 
+            - setup_remote_docker
+            - run:
+                name: Check docker socket
+                command: docker ps
+
+
             # Download and cache dependencies
             - restore_cache:
                   keys:
@@ -32,9 +38,9 @@ jobs:
                       - ./vendor
                   key: v1-dependencies-{{ checksum "composer.json" }}
 
-            - run:
-                name: Codeception
-                command: ./vendor/bin/codecept run
+#            - run:
+#                name: Codeception
+#                command: ./vendor/bin/codecept run
 
 
 #  # Build CircleCi Worker
