@@ -1,0 +1,16 @@
+version: '3.3'
+
+# Define services
+#
+services:
+    runner:
+        build:
+            context: .
+            dockerfile: docker/supervisor-nginx-fpm/Dockerfile
+        ports:
+            - "80:80"
+
+    selenium:
+        image: selenium/standalone-chrome:latest
+        depends_on:
+          - runner

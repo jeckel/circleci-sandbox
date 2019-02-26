@@ -2,26 +2,78 @@
 # Configure Jobs:
 version: 2
 jobs:
+    # Will build the source code with deps and store in cache to be reused in next steps
+#    composer:
+#        docker:
+#            - image: composer
+#        steps:
+#            - checkout
+#            - restore_cache:
+#                  name: Restore composer's vendor cache
+#                  keys:
+#                      - vendor-{{ checksum "composer.lock" }}
+#            - run:
+#                  name: Install composer deps
+#                  command: if [ ! -d vendor ] ; then composer install; fi
+#            - run:
+#                  name: Setup env file
+#                  command: cp .env.dist .env
+#            - save_cache:
+#                  name: Save composer's vendor in cache
+#                  key: vendor-{{ checksum "composer.lock" }}
+#                  paths:
+#                      - "vendor"
+#            - save_cache:
+#                  name: Save builded source in cache
+#                  key: source-{{ .Environment.CIRCLE_SHA1 }}
+#                  paths: .
 
     build:
         docker:
             - image: docker:git
-            - image: selenium/standalone-chrome:latest
+#            - image: selenium/standalone-chrome:latest
 
         working_directory: ~/repo
 
         steps:
-            - checkout
+#            - restore_cache:
+#                  name: Restore composer's vendor cache
+#                  keys:
+#                      - source-{{ .Environment.CIRCLE_SHA1 }}
+            - run: apk add curl
 
             - setup_remote_docker
             - run:
-                name: Check docker socket
-                command: docker ps
+                  name: Install Docker Compose
+                  command: |
+                      curl -L https://github.com/docker/compose/releases/download/1.23.2/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+                      chmod +x ~/docker-compose
+                      mv ~/docker-compose /usr/local/bin/docker-compose
 
-            - run: docker build -t runner -f docker/supervisor-nginx-fpm/Dockerfile .
-            - run: docker run -d runner
+            - run: echo $PATH
+
+#            - run: docker-compose -f docker-compose.circleci.yml build
+            - run: /usr/local/bin/docker-compose -f docker-compose.circleci.yml up -d
+
 
             - run:
-                  name: Check docker socket
-                  command: docker ps
+                name: Check docker socket
+                command: docker ps
+#
+#            - run: docker build -t runner -f docker/supervisor-nginx-fpm/Dockerfile .
+#            - run: docker run -d runner
+#
+#            - run:
+#                  name: Check docker socket
+#                  command: docker ps
 
+## Define the workflow
+#workflows:
+#    version: 2
+#    # Always run code-quality
+#    build:
+#        jobs:
+#            - composer
+#            - build:
+#                  requires:
+#                      - composer
