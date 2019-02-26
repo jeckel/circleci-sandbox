@@ -19,6 +19,7 @@ jobs:
                 command: docker ps
 
             - run: docker build -t runner -f docker/supervisor-nginx-fpm/Dockerfile .
+            - run: docker run -d runner
 
             - run:
                   name: Check docker socket
