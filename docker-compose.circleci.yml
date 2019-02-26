@@ -17,7 +17,7 @@ services:
 
     codeception:
         build:
-            contexty: .
+            context: .
             dockerfile: docker/circleci-codeception/Dockerfile
         depends_on:
           - web
