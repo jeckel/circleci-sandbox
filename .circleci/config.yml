@@ -17,7 +17,6 @@ jobs:
                   name: Install composer deps
                   command: |
                        composer install
-#                      chmod -R 777 vendor
             - save_cache:
                   name: Save composer's vendor in cache
                   key: vendor-v2-{{ checksum "composer.lock" }}
@@ -35,7 +34,6 @@ jobs:
         working_directory: ~/project
 
         steps:
-#            - run: sudo chmod -R 777 .
             - restore_cache:
                   name: Restore composer's vendor cache
                   keys:
@@ -50,13 +48,19 @@ jobs:
 
             - run: docker-compose -f docker-compose.circleci.yml up -d web selenium
 
-            - run:
-                name: Check docker socket
-                command: docker ps
-
-#            - run: ./wait-for-it.sh -p 4444
-
             - run: docker-compose -f docker-compose.circleci.yml run codeception
+
+            - run:
+                name: Extract artifacts
+                command: |
+                    ID=$(sudo docker ps | grep codeception | cut -f 1 -d ' ')
+                    echo $ID
+                    mkdir -p ~/artifacts
+                    docker cp ${ID}:/app/tests/_output/ ~/artifacts
+
+            - store_artifacts:
+                  path: ~/artifacts
+
 
 # Define the workflow
 workflows:
