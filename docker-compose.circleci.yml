@@ -19,7 +19,7 @@ services:
     selenium:
         image: selenium/standalone-chrome:latest
         depends_on:
-            - web
+            - nginx
 
     codeception:
         build:
@@ -28,6 +28,6 @@ services:
         environment:
             SELENIUM_HOST: "selenium:4444"
         depends_on:
-            - web
+            - nginx
             - selenium
         command: run --coverage --coverage-html
