@@ -38,6 +38,7 @@ jobs:
                   name: Restore composer's vendor cache
                   keys:
                       - source-v2-{{ .Environment.CIRCLE_SHA1 }}
+
             - run: mv /tmp/project ~/
             - run:
                   name: Install Docker Compose
@@ -46,7 +47,9 @@ jobs:
                       chmod +x ~/docker-compose
                       mv ~/docker-compose /usr/local/bin/docker-compose
 
-            - run: docker-compose -f docker-compose.circleci.yml up -d web selenium
+            - run:
+                name: Launch services
+                command: docker-compose -f docker-compose.circleci.yml up -d nginx fpm selenium
 
             - run: docker-compose -f docker-compose.circleci.yml run codeception
 
