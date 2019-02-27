@@ -22,7 +22,6 @@ services:
             - nginx
 
     codeception:
-#        image: php:7-cli
         image: php:7-cli-alpine
         environment:
             SELENIUM_HOST: "selenium:4444"
