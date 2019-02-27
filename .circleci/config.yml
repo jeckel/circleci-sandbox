@@ -50,16 +50,17 @@ jobs:
 
             - run: docker-compose -f docker-compose.circleci.yml run codeception
 
-            - run:
-                name: Extract artifacts
-
-            - store_artifacts:                command: |
-                    ID=$(docker ps -a | grep codeception | cut -f 1 -d ' ')
-                    echo $ID
-                    mkdir -p ~/artifacts
-                    docker cp ${ID}:/app/tests/_output/ ~/artifacts
-
-                  path: ~/artifacts
+#            - run:
+#                name: Extract artifacts
+#
+#            - store_artifacts:
+#            - command: |
+#                    ID=$(docker ps -a | grep codeception | cut -f 1 -d ' ')
+#                    echo $ID
+#                    mkdir -p ~/artifacts
+#                    docker cp ${ID}:/app/tests/_output/ ~/artifacts
+#
+#                  path: ~/artifacts
 
 
 # Define the workflow
