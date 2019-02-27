@@ -52,13 +52,13 @@ jobs:
 
             - run:
                 name: Extract artifacts
-                command: |
+
+            - store_artifacts:                command: |
                     ID=$(docker ps -a | grep codeception | cut -f 1 -d ' ')
                     echo $ID
                     mkdir -p ~/artifacts
                     docker cp ${ID}:/app/tests/_output/ ~/artifacts
 
-            - store_artifacts:
                   path: ~/artifacts
 
 
