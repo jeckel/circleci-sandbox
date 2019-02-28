@@ -15,7 +15,7 @@ services:
 #        image: php:7-fpm-alpine
         build:
             context: docker/
-            dockerfile: Dockerfile
+            dockerfile: Dockerfile.fpm
         volumes:
             - ./:/var/www/project
 
@@ -25,7 +25,10 @@ services:
             - nginx
 
     codeception:
-        image: php:7-cli-alpine
+#        image: php:7-cli-alpine
+        build:
+            context: docker/
+            dockerfile: Dockerfile.cli
         environment:
             SELENIUM_HOST: "selenium:4444"
         volumes:
