@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-./vendor/bin/codecept $@
+wait-for-it.sh ${SELENIUM_HOST} -- ./vendor/bin/codecept $@

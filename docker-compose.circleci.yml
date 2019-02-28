@@ -12,7 +12,10 @@ services:
             - fpm
 
     fpm:
-        image: php:7-fpm-alpine
+#        image: php:7-fpm-alpine
+        build:
+            context: docker/
+            dockerfile: Dockerfile
         volumes:
             - ./:/var/www/project
 
@@ -31,7 +34,7 @@ services:
         depends_on:
             - nginx
             - selenium
-        command: ./docker/wait-for.sh selenium:4444 -- php ./vendor/bin/codecept run
-#        command: ./docker/wait-for.sh selenium:4444 -- php ./vendor/bin/codecept run --coverage --coverage-html
+#         command: ./docker/wait-for.sh selenium:4444 -- php ./vendor/bin/codecept run
+        command: ./docker/wait-for.sh selenium:4444 -- php ./vendor/bin/codecept run --coverage --coverage-html
 #        command: ./docker/wait-for-it.sh selenium:4444 -- php ./vendor/bin/codecept run
 #        command: php ./vendor/bin/codecept run --coverage --coverage-html

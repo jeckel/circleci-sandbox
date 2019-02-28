@@ -23,3 +23,14 @@ services:
         image: selenium/standalone-chrome:latest
         depends_on:
           - web
+
+    codeception:
+        build:
+            context: .
+            dockerfile: docker/circleci-codeception/Dockerfile
+        environment:
+            SELENIUM_HOST: "selenium:4444"
+        depends_on:
+            - web
+            - selenium
+#        command: run --coverage --coverage-html
