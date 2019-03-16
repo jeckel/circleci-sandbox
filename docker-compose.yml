@@ -45,14 +45,17 @@ services:
             default:
 
     codeception:
-        build:
-            context: .
-            dockerfile: docker/circleci-codeception/Dockerfile
+        image: codeception/codeception
+#        build:
+#            context: ./docker/codeception
         environment:
             SELENIUM_HOST: "selenium:4444"
+        volumes:
+            - ./:/var/www/project/
+        working_dir: /var/www/project/
         depends_on:
             - web
             - selenium
-#        command: run --coverage --coverage-html
+        command: codecept run --coverage --coverage-html
         networks:
             default:

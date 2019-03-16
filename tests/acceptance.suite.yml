@@ -8,6 +8,6 @@ actor: AcceptanceTester
 modules:
     enabled:
 #        - PhpBrowser:
-#            url: http://nginx/
+#            url: http://web/
         - \Helper\Acceptance
         - WebDriver
