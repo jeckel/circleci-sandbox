@@ -40,16 +40,15 @@ jobs:
                   name: Fix permissions
                   command: sudo chown -R $(id -u):$(id -g) .
             - run:
-                name: Build & pull images
+                name: Pull images
                 command: |
-                    docker-compose build
                     docker-compose pull
             - run:
                 name: Launch services
                 command: docker-compose up -d web fpm selenium
             - run:
                 name: Run codeception
-                command: docker-compose run codeception wait-for-it.sh selenium:4444 -- ./vendor/bin/codecept run --coverage --coverage-html
+                command: docker-compose run codeception wait-for.sh selenium:4444 -- ./vendor/bin/codecept run --coverage --coverage-html
 
             - store_artifacts:
                   path: /tmp/project/tests/_output

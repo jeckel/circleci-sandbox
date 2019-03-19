@@ -14,8 +14,7 @@ services:
             - "80:80"
 
     fpm:
-        build:
-            context: ./docker/fpm/
+        image: jeckel/php-test:7.3-fpm-alpine
         volumes:
             - ./:/var/www/project/
         working_dir: /var/www/project/
@@ -28,8 +27,7 @@ services:
           - web
 
     codeception:
-        build:
-            context: ./docker/codeception
+        image: jeckel/php-test:7.3-cli-alpine
         environment:
             SELENIUM_HOST: "selenium:4444"
         volumes:
