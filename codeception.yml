@@ -14,8 +14,6 @@ coverage:
     include:
         - public/*
         - src/*
-#    work_dir: /var/www/project/
-    # If remote = true, c3 required ?
     remote: false
 
 modules:
