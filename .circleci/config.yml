@@ -49,9 +49,9 @@ jobs:
 
             - run:
                 name: Launch services
-                command: docker-compose -f docker-compose.circleci.yml up -d web fpm selenium
+                command: docker-compose up -d web fpm selenium
 
-            - run: docker-compose -f docker-compose.circleci.yml run codeception
+            - run: docker-compose run codeception
             - store_artifacts:
                   path: ~/project/tests/_output
 
