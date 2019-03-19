@@ -52,14 +52,19 @@ jobs:
 #                      mv ~/docker-compose /usr/local/bin/docker-compose
 
             - run:
-                name: Build images
-                command: docker-compose build
+                name: Build & pull images
+                command: |
+                    docker-compose build
+                    docker-compose pull
 
             - run:
                 name: Launch services
                 command: docker-compose up -d web fpm selenium
 
-            - run: docker-compose run codeception
+            - run:
+                name: Run codeception
+                command: docker-compose run codeception ./vendor/bin/codecept run --coverage --coverage-html
+
             - store_artifacts:
                   path: /tmp/project/tests/_output
 #                  path: ~/project/tests/_output
