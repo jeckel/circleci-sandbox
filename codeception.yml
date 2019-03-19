@@ -12,7 +12,11 @@ extensions:
 coverage:
     enabled: true
     include:
-        - public/*.php
+        - public/*
+        - src/*
+#    work_dir: /var/www/project/
+    # If remote = true, c3 required ?
+    remote: false
 
 modules:
     config:
@@ -21,9 +25,3 @@ modules:
             host: 'selenium'
             port: 4444
             browser: chrome
-            #window_size: 1024x768
-            restart: false
-            capabilities:
-                unexpectedAlertBehaviour: 'accept'
-                acceptSslCerts: true
-            pageload_timeout: 10 # Timeout in seconds

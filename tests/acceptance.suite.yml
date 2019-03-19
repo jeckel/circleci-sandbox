@@ -7,7 +7,7 @@
 actor: AcceptanceTester
 modules:
     enabled:
-#        - PhpBrowser:
-#            url: http://web/
+        - PhpBrowser:
+            url: http://web/
         - \Helper\Acceptance
-        - WebDriver
+#        - WebDriver

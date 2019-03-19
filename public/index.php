@@ -2,6 +2,15 @@
 
 include '../c3.php';
 
-$name = isset($_GET['name']) ? $_GET['name'] : 'World';
+include '../src/Hello.php';
 
-echo "Hello $name";
+$hello = new Hello($_GET['name']);
+?>
+<html>
+<head></head>
+<body>
+<?= $hello ?>
+<?php phpinfo() ?>
+</body>
+</html>
+

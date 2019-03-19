@@ -1,7 +1,6 @@
 .PHONY: up codecept circle
 
-#CODECEPTION=docker-compose run --rm -u $(shell id -u):$(shell id -g) php-fpm ./vendor/bin/codecept
-CODECEPTION=docker-compose run --rm -u $(shell id -u):$(shell id -g) codeception
+CODECEPTION=docker-compose run --rm codeception ./vendor/bin/codecept
 
 up:
 	@docker-compose up -d
@@ -10,6 +9,9 @@ codecept:
 	@${CODECEPTION} ${CMD}
 
 test: up
+	@${CODECEPTION} run
+
+test-cover: up
 	@${CODECEPTION} run --coverage --coverage-html
 
 circle:
