@@ -41,7 +41,7 @@ jobs:
                   command: docker-compose run --rm codeception wait-for.sh selenium:4444 -- ./vendor/bin/codecept run --coverage --coverage-html --coverage-xml
 
             - codecov/upload:
-                  file: /tmp/project/tests/_output/coverage.xml
+                  file: tests/_output/coverage.xml
 
             - store_artifacts:
-                  path: /tmp/project/tests/_output
+                  path: tests/_output
