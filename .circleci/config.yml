@@ -2,7 +2,7 @@
 # Configure Jobs:
 version: 2.1
 orbs:
-    codecov: codecov/codecov@1.0.2
+    codecov: codecov/codecov@1.0.4
 jobs:
     # Will build the source code with deps and store in cache to be reused in next steps
     composer:
