@@ -1,4 +1,4 @@
-version: '3.3'
+version: '3.5'
 
 # Define services
 #
@@ -20,9 +20,13 @@ services:
         working_dir: /var/www/project/
 
     selenium:
-        image: selenium/standalone-chrome:latest
-        volumes:
-          - /dev/shm:/dev/shm
+        build:
+            context: docker/selenium
+            shm_size: 2gb
+##        image: selenium/standalone-chrome:latest
+#        image: selenium/standalone-firefox:latest
+#        volumes:
+#          - /dev/shm:/dev/shm
         depends_on:
           - web
 

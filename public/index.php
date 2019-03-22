@@ -10,7 +10,6 @@ $hello = new Hello($_GET['name']);
 <head></head>
 <body>
 <?= $hello ?>
-<?php phpinfo() ?>
 </body>
 </html>
 
