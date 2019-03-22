@@ -1,1 +1,2 @@
+service_name: circleci
 coverage_clover: tests/_output/coverage.xml
