@@ -15,6 +15,10 @@ jobs:
                       curl -L https://github.com/docker/compose/releases/download/1.23.2/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
                       chmod +x ~/docker-compose
                       sudo mv ~/docker-compose /usr/local/bin/docker-compose
+            - run:
+                  name: Pull images
+                  command: |
+                      docker-compose pull
 
             - restore_cache:
                   name: Restore composer's vendor cache
@@ -29,10 +33,6 @@ jobs:
                   paths:
                       - "vendor"
 
-            - run:
-                  name: Pull images
-                  command: |
-                      docker-compose pull
             - run:
                   name: Launch services
                   command: docker-compose up -d web fpm selenium
