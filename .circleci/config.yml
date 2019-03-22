@@ -19,13 +19,13 @@ jobs:
             - restore_cache:
                   name: Restore composer's vendor cache
                   keys:
-                      - vendor-v2-{{ checksum "composer.lock" }}
+                      - vendor-v1-{{ checksum "composer.lock" }}
             - run:
                   name: Install composer deps
                   command: docker-compose run --rm codeception composer install
             - save_cache:
                   name: Save composer's vendor in cache
-                  key: vendor-v2-{{ checksum "composer.lock" }}
+                  key: vendor-v1-{{ checksum "composer.lock" }}
                   paths:
                       - "vendor"
 
