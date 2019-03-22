@@ -40,6 +40,12 @@ jobs:
                   name: Run codeception
                   command: docker-compose run --rm codeception wait-for.sh selenium:4444 -- ./vendor/bin/codecept run --coverage --coverage-html --coverage-xml
 
+            - run:
+                  name: coveralls
+                  command: |
+                      wget https://github.com/php-coveralls/php-coveralls/releases/download/v2.1.0/php-coveralls.phar
+                      php php-coveralls.phar --verbose --config .coveralls.yml
+
             - codecov/upload:
                   file: tests/_output/coverage.xml
 
