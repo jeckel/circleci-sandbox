@@ -1,6 +1,8 @@
 # .circleci/config.yml
 # Configure Jobs:
 version: 2
+orbs:
+    codecov: codecov/codecov@1.0.2
 jobs:
     # Will build the source code with deps and store in cache to be reused in next steps
     composer:
@@ -49,6 +51,9 @@ jobs:
             - run:
                 name: Run codeception
                 command: docker-compose run codeception wait-for.sh selenium:4444 -- ./vendor/bin/codecept run --coverage --coverage-html --coverage-xml
+
+            - codecov/upload:
+                  file: /tmp/project/tests/_output/coverage.xml
 
             - store_artifacts:
                   path: /tmp/project/tests/_output
