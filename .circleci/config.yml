@@ -7,7 +7,6 @@ jobs:
     build:
         machine:
             docker_layer_caching: true
-#        working_directory: /tmp/project
         steps:
             - checkout
             - run:
@@ -41,8 +40,8 @@ jobs:
                   name: Run codeception
                   command: docker-compose run --rm codeception wait-for.sh selenium:4444 -- ./vendor/bin/codecept run --coverage --coverage-html --coverage-xml
 
-#            - codecov/upload:
-#                  file: /tmp/project/tests/_output/coverage.xml
-#
-#            - store_artifacts:
-#                  path: /tmp/project/tests/_output
+            - codecov/upload:
+                  file: /tmp/project/tests/_output/coverage.xml
+
+            - store_artifacts:
+                  path: /tmp/project/tests/_output
