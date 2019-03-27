@@ -7,12 +7,13 @@
 namespace Test\App\Entity;
 
 use App\Entity\User;
+use Codeception\Test\Unit;
 
 /**
  * Class UserTest
  * @package Test\App\Entity
  */
-class UserTest extends \Codeception\Test\Unit
+class UserTest extends Unit
 {
     /**
      * @test User::setDisplayName
@@ -27,7 +28,7 @@ class UserTest extends \Codeception\Test\Unit
 
     /**
      * @test User::setId
-     * @test USer::getId
+     * @test User::getId
      */
     public function testSetGetId()
     {
