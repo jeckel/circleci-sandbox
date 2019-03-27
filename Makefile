@@ -15,8 +15,7 @@ test: up
 	@${CODECEPTION} run
 
 test-cover: up
-	@docker-compose run --rm codeception wait-for.sh selenium:4444 -- ./vendor/bin/codecept run --coverage --coverage-xml
-#	@docker-compose run --rm codeception wait-for.sh selenium:4444 -- ./vendor/bin/codecept run --coverage --coverage-html --coverage-xml
+	@docker-compose run --rm codeception wait-for.sh selenium:4444 -- ./vendor/bin/codecept run --coverage --coverage-html
 
 circle:
 	@circleci local execute --job build
