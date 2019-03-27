@@ -70,7 +70,7 @@ jobs:
 
             - run:
                   name: PHP Stan
-                  command: vendor/bin/phpstan analyse src tests
+                  command: vendor/bin/phpstan analyse
 
 # Define the workflow:
 workflows:
