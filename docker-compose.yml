@@ -47,4 +47,4 @@ services:
         depends_on:
             - web
             - selenium
-        command: codecept run --coverage --coverage-html
+        command: ./vendor/bin/codecept run --coverage --coverage-html
