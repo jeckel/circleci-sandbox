@@ -8,6 +8,9 @@ up:
 codecept:
 	@${CODECEPTION} ${CMD}
 
+composer:
+	@docker-compose run --rm --no-deps codeception composer ${CMD}
+
 test: up
 	@${CODECEPTION} run
 
