@@ -1,8 +1,11 @@
 # .circleci/config.yml
-# Configure Jobs:
 version: 2.1
+
+# Require orbs
 orbs:
     codecov: codecov/codecov@1.0.4
+
+# Configure Jobs:
 jobs:
     build:
         machine:
@@ -45,3 +48,34 @@ jobs:
 
             - store_artifacts:
                   path: tests/_output
+
+    phpstan:
+        docker:
+            - image: jeckel/php-test:7.3-cli-alpine
+        steps:
+            - checkout
+
+            - restore_cache:
+                  name: Restore composer's vendor cache
+                  keys:
+                      - vendor-v1-{{ checksum "composer.lock" }}
+            - run:
+                  name: Install composer deps
+                  command: composer install
+            - save_cache:
+                  name: Save composer's vendor in cache
+                  key: vendor-v1-{{ checksum "composer.lock" }}
+                  paths:
+                      - "vendor"
+
+            - run:
+                  name: PHP Stan
+                  command: vendor/bin/phpstan analyse src tests
+
+# Define the workflow:
+workflows:
+    version: 2
+    build:
+        jobs:
+            - build
+            - phpstan
