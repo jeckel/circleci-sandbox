@@ -19,3 +19,6 @@ test-cover: up
 
 circle:
 	@circleci local execute --job build
+
+stan:
+	@docker-compose run --rm --no-deps codeception vendor/bin/phpstan analyse src tests
