@@ -43,16 +43,17 @@ class HelloController implements LoggerAwareInterface
      * @param Response $response
      * @param array $args
      * @return Response
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function __invoke(Request $request, Response $response, array $args = []): Response
     {
         $this->logger->info('Say Hello controller');
         if (empty($args['name'])) {
             $response->getBody()->write("Hello World");
-        } else {
-            $user = $this->userRepository->findByLogin($args['name']);
-            $response->getBody()->write("Hello, {$user->getDisplayName()}");
+            return $response;
         }
+        $user = $this->userRepository->findByLogin($args['name']);
+        $response->getBody()->write("Hello, {$user->getDisplayName()}");
 
         return $response;
     }

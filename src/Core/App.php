@@ -44,8 +44,8 @@ class App extends \Slim\App
         $container = $this->getContainer();
 
         // monolog
-        $container['logger'] = function (ContainerInterface $c) {
-            $settings = $c->get('settings')['logger'];
+        $container['logger'] = function (ContainerInterface $_container) {
+            $settings = $_container->get('settings')['logger'];
             $logger = new Logger($settings['name']);
             $logger->pushProcessor(new UidProcessor());
             $logger->pushHandler(new StreamHandler($settings['path'], $settings['level']));
