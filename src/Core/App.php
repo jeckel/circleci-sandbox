@@ -53,7 +53,9 @@ class App extends \Slim\App
         };
 
         // Repositories
-        $container[UserRepositoryInterface::class] = function () { return new UserRepository(); };
+        $container[UserRepositoryInterface::class] = function () {
+            return new UserRepository();
+        };
 
         return $this;
     }
