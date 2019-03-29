@@ -22,4 +22,7 @@ circle:
 
 stan:
 	@docker-compose run --rm --no-deps codeception vendor/bin/phpstan analyse
-#	@docker-compose run --rm --no-deps codeception vendor/bin/phpstan analyse src tests/unit
+
+
+phpcs:
+	@docker-compose run --rm --no-deps codeception vendor/bin/phpcs
