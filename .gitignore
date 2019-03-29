@@ -1,4 +1,8 @@
+#IDE SPecifics
 .idea/
 
+# Deps
 /vendor/
 
+# Cache and temp files
+.phpcs-cache

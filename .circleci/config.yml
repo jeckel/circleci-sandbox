@@ -71,6 +71,17 @@ jobs:
                   name: PHP Stan
                   command: vendor/bin/phpstan analyse
 
+    phpcs:
+        docker:
+            - image: jeckel/php-test:7.3-cli-alpine
+        working_directory: /home/circleci/project
+        steps:
+            - attach_workspace:
+                  at: /home/circleci
+            - run:
+                  name: PHP Stan
+                  command: vendor/bin/phpcs
+
     builds_completed:
         docker:
             - image: docker:git
@@ -89,7 +100,11 @@ workflows:
             - phpstan:
                 requires:
                     - composer
+            - phpcs:
+                requires:
+                    - composer
             - builds_completed:
                 requires:
                     - phpstan
                     - tests
+                    - phpcs

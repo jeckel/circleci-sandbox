@@ -9,5 +9,5 @@ modules:
     enabled:
 #        - PhpBrowser:
 #              url: 'http://web/'
-        - \Helper\Acceptance
+        - \Test\Support\Helper\Acceptance
         - WebDriver
