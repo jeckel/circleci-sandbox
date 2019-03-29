@@ -10,8 +10,8 @@ namespace App\Entity;
 
 class User
 {
-    /** @var int */
-    protected $id;
+    /** @var string */
+    protected $uid;
 
     /** @var string */
     protected $login;
@@ -20,23 +20,23 @@ class User
     protected $displayName;
 
     /**
-     * @return int
+     * @return string
      */
-    public function getId(): int
+    public function getUid(): string
     {
-        return $this->id;
+        return $this->uid;
     }
 
     /**
-     * @param int $id
+     * @param string $uid
      * @return User
      */
-    public function setId(int $id): User
+    public function setUid(string $uid): User
     {
-        $this->id = $id;
+        $this->uid = $uid;
         return $this;
     }
-
+    
     /**
      * @return string
      */

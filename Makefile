@@ -1,4 +1,4 @@
-.PHONY: up codecept circle
+.PHONY: up codecept circle composer test test-cover stan phpcs phpmd qa
 
 CODECEPTION=docker-compose run --rm codeception ./vendor/bin/codecept
 
@@ -23,6 +23,10 @@ circle:
 stan:
 	@docker-compose run --rm --no-deps codeception vendor/bin/phpstan analyse
 
-
 phpcs:
 	@docker-compose run --rm --no-deps codeception vendor/bin/phpcs
+
+phpmd:
+	@docker-compose run --rm --no-deps codeception vendor/bin/phpmd src text cleancode,codesize,design,naming,unusedcode
+
+qa: test stan phpcs phpmd

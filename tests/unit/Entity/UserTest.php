@@ -27,14 +27,14 @@ class UserTest extends Unit
     }
 
     /**
-     * @test User::setId
-     * @test User::getId
+     * @test User::setUid
+     * @test User::getUid
      */
-    public function testSetGetId()
+    public function testSetGetUid()
     {
         $user = new User();
-        $this->assertSame($user, $user->setId(123));
-        $this->assertEquals(123, $user->getId());
+        $this->assertSame($user, $user->setUid('foo-123'));
+        $this->assertEquals('foo-123', $user->getUid());
     }
 
     /**
