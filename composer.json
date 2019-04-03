@@ -12,6 +12,12 @@
       "Test\\App\\": "tests/unit"
     }
   },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/jeckel/grumphp"
+    }
+  ],
   "require": {
     "slim/slim": "^3.0",
     "monolog/monolog": "^1.24"
@@ -21,6 +27,7 @@
     "codeception/c3": "^2.4",
     "phpstan/phpstan": "^0.11.5",
     "squizlabs/php_codesniffer": "^3.4",
-    "phpmd/phpmd": "^2.6"
+    "phpmd/phpmd": "^2.6",
+    "phpro/grumphp": "dev-docker-compose"
   }
 }
